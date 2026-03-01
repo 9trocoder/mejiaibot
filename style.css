@@ -408,3 +408,26 @@ code {
   padding: 0;
   margin-right: 12px;
 }
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-primary);
+  text-align: center;
+  padding: 20px;
+}
+
+.empty-logo {
+  margin-bottom: 16px;
+  background: var(--chat-bg-ai);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
