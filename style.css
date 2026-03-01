@@ -369,3 +369,31 @@ code {
     opacity: 1;
   }
 }
+
+/* Top Bar */
+.top-bar {
+  position: absolute; /* Changed from fixed to absolute within main-content */
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  background-color: var(--bg-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.logo {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text-primary);
+  letter-spacing: -0.5px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
