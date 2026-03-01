@@ -85,7 +85,61 @@
         <!-- Messages or Empty State injected by JS -->
       </div>
 
-      
+       <!-- Input Footer -->
+      <div class="input-footer">
+        <div class="input-container">
+          <button
+            id="voice-btn"
+            class="input-btn voice-btn"
+            title="Voice Input"
+          >
+            <svg
+              stroke="currentColor"
+              fill="none"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4"
+              height="1em"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"
+              ></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="23"></line>
+              <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+          </button>
+          <textarea
+            id="user-input"
+            placeholder="Send a message..."
+            rows="1"
+          ></textarea>
+          <button id="send-btn" class="input-btn send-btn" title="Send Message">
+            <svg
+              stroke="currentColor"
+              fill="none"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4"
+              height="1em"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
   </body>
 </html>
 
