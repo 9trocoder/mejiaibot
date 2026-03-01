@@ -21,3 +21,14 @@ const sidebarOverlay = document.getElementById("sidebar-overlay");
 let sessions = JSON.parse(localStorage.getItem("sessions")) || [];
 let currentSessionId = localStorage.getItem("currentSessionId");
 let chatHistory = [];
+
+
+// load current session if exists
+if (currentSessionId) {
+  const session = sessions.find((s) => s.id === currentSessionId);
+  if (session) {
+    chatHistory = session.messages;
+  } else {
+    currentSessionId = null;
+  }
+}
