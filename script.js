@@ -357,3 +357,51 @@ userInput.addEventListener("keydown", (e) => {
     handleChat();
   }
 });
+
+// Auto-resize Textarea
+userInput.addEventListener("input", function () {
+  this.style.height = "auto";
+  this.style.height = this.scrollHeight + "px";
+  if (this.value === "") this.style.height = "50px";
+});
+
+// Clear History
+clearBtn.addEventListener("click", () => {
+  if (confirm("Are you sure you want to clear the chat history?")) {
+    chatHistory = [];
+    if (currentSessionId) {
+      const session = sessions.find((s) => s.id === currentSessionId);
+      if (session) session.messages = [];
+      localStorage.setItem("sessions", JSON.stringify(sessions));
+    }
+    renderHistory();
+  }
+});
+
+// Theme Toggle
+themeBtn.addEventListener("click", () => {
+  const currentTheme = document.documentElement.getAttribute("data-theme");
+  const newTheme = currentTheme === "light" ? "dark" : "light";
+  applyTheme(newTheme);
+});
+
+// New Chat
+if (newChatBtn) {
+  newChatBtn.addEventListener("click", startNewChat);
+}
+
+// Mobile Menu Toggle
+if (mobileMenuBtn) {
+  mobileMenuBtn.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+    sidebarOverlay.classList.toggle("active");
+  });
+}
+
+// Close Sidebar on Overlay Click
+if (sidebarOverlay) {
+  sidebarOverlay.addEventListener("click", () => {
+    sidebar.classList.remove("open");
+    sidebarOverlay.classList.remove("active");
+  });
+}
