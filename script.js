@@ -299,3 +299,34 @@ async function handleChat() {
     addMessage("ai", `Error: ${error.message}`);
   }
 }
+
+// 4. Add Message to State & Storage
+function addMessage(role, content) {
+  const newMessage = { role, content };
+  chatHistory.push(newMessage);
+
+  if (!currentSessionId) {
+    // Create new session
+    currentSessionId = Date.now().toString();
+    localStorage.setItem("currentSessionId", currentSessionId);
+
+    // Generate title from first user message
+    let title =
+      content.length > 30 ? content.substring(0, 30) + "..." : content;
+
+    const newSession = {
+      id: currentSessionId,
+      title: title,
+      messages: chatHistory,
+    };
+    sessions.unshift(newSession);
+  } else {
+    // Update existing session
+    const session = sessions.find((s) => s.id === currentSessionId);
+    if (session) session.messages = chatHistory;
+  }
+
+  localStorage.setItem("sessions", JSON.stringify(sessions));
+  appendMessageToDOM(role, content);
+  renderSidebar();
+}
