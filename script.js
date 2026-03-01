@@ -346,3 +346,14 @@ function applyTheme(theme) {
   // Update Button Icon
   if (themeBtn) themeBtn.innerHTML = theme === "light" ? SVG_MOON : SVG_SUN;
 }
+
+// Send Button
+sendBtn.addEventListener("click", handleChat);
+
+// Enter Key (Shift+Enter for new line)
+userInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    handleChat();
+  }
+});
