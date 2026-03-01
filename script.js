@@ -134,3 +134,13 @@ function loadSession(id) {
   renderHistory();
   renderSidebar();
 }
+
+// 4. Start New Chat
+function startNewChat() {
+  currentSessionId = null;
+  localStorage.removeItem("currentSessionId");
+  chatHistory = [];
+  renderHistory();
+  renderSidebar();
+  userInput.focus();
+}
