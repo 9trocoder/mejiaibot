@@ -29,5 +29,56 @@
         <!-- Chat history will be injected here -->
       </div>
     </div>
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <button id="mobile-menu-btn" class="mobile-menu-btn" title="Open Menu">
+          <svg
+            stroke="currentColor"
+            fill="none"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="h-6 w-6"
+            height="1em"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <div class="logo">NeuralChat</div>
+        <div class="controls">
+          <select id="model-select" aria-label="Select AI Model">
+            <option value="meta-llama/llama-3-8b-instruct">Llama 3 8B</option>
+            <option value="mistralai/mistral-7b-instruct">Mistral 7B</option>
+          </select>
+          <button id="theme-btn" title="Toggle Theme">☀️</button>
+          <button id="clear-btn" title="Clear Chat">
+            <svg
+              stroke="currentColor"
+              fill="none"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-4 w-4"
+              height="1em"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path
+                d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
   </body>
 </html>
+
