@@ -83,3 +83,44 @@ function renderHistory() {
   });
   scrollToBottom();
 }
+
+// 2. Render Sidebar
+function renderSidebar() {
+  historyList.innerHTML = "";
+
+  if (sessions.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "history-item";
+    empty.textContent = "No previous chats";
+    empty.style.cursor = "default";
+    empty.style.opacity = "0.5";
+    historyList.appendChild(empty);
+    return;
+  }
+
+  sessions.forEach((session) => {
+    const item = document.createElement("div");
+    item.className = "history-item";
+
+    const titleSpan = document.createElement("span");
+    titleSpan.className = "history-title";
+    titleSpan.textContent = session.title;
+    item.appendChild(titleSpan);
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.className = "delete-chat-btn";
+    deleteBtn.innerHTML = SVG_TRASH;
+    deleteBtn.title = "Delete chat";
+    deleteBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      deleteSession(session.id);
+    });
+    item.appendChild(deleteBtn);
+
+    if (session.id === currentSessionId) {
+      item.classList.add("active");
+    }
+    item.addEventListener("click", () => loadSession(session.id));
+    historyList.appendChild(item);
+  });
+}
