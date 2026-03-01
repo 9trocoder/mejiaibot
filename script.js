@@ -1,7 +1,7 @@
 // adding api key and url
 // declaration of variables
 const API_KEY =
-  "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";
+  "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";
 const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 const chatContainer = document.getElementById("chat-container");
