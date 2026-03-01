@@ -190,3 +190,33 @@ body {
   padding: 0;
   align-items: flex-start;
 }
+
+/* Content */
+.content {
+  flex: 1;
+  line-height: 1.6;
+  font-size: 16px;
+  overflow-wrap: break-word;
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+
+.content p {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.content p:last-child {
+  margin-bottom: 0;
+}
+
+.message-row.ai .content {
+  background-color: var(--chat-bg-ai);
+  border-top-left-radius: 2px;
+}
+
+.message-row.user .content {
+  background-color: var(--avatar-user);
+  color: #ffffff;
+  border-top-right-radius: 2px;
+}
