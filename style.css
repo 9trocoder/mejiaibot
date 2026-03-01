@@ -220,3 +220,18 @@ body {
   color: #ffffff;
   border-top-right-radius: 2px;
 }
+/* Code Blocks */
+pre {
+  background-color: var(--code-bg);
+  padding: 16px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 12px 0;
+  border: 1px solid var(--border-color);
+  position: relative; /* For copy button positioning */
+}
+
+code {
+  font-family: "Consolas", "Monaco", monospace;
+  font-size: 14px;
+}
