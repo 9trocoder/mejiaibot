@@ -1,7 +1,5 @@
-// adding api key and url
+// adding  url
 // declaration of variables
-const API_KEY =
-  "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";
 const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 const chatContainer = document.getElementById("chat-container");
@@ -230,6 +228,8 @@ function scrollToBottom() {
 // 3. Handle API Interaction
 async function handleChat() {
   const text = userInput.value.trim();
+
+  console.log(CONFIG.API_KEY);
   if (!text) return;
 
   // 1. Add User Message
@@ -264,7 +264,7 @@ async function handleChat() {
     const response = await fetch(API_URL, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${API_KEY}`,
+        Authorization: `Bearer ${CONFIG.API_KEY}`,
         "Content-Type": "application/json",
         // OpenRouter specific headers
         "HTTP-Referer": "http://localhost:3000", // Safer for local testing
