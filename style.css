@@ -163,3 +163,20 @@ body {
   padding-top: 60px; /* Space for top bar */
   padding-bottom: 180px; /* Space for input area */
 }
+/* Message Row (Full Width) */
+.message-row {
+  width: 100%;
+  border-bottom: none;
+  padding: 16px 24px;
+  display: flex;
+}
+
+.message-row.ai {
+  background-color: transparent;
+  justify-content: flex-start;
+}
+
+.message-row.user {
+  background-color: transparent;
+  justify-content: flex-end;
+}
