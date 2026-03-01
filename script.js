@@ -144,3 +144,17 @@ function startNewChat() {
   renderSidebar();
   userInput.focus();
 }
+
+// 5. Delete Session
+function deleteSession(id) {
+  if (confirm("Delete this chat?")) {
+    sessions = sessions.filter((s) => s.id !== id);
+    localStorage.setItem("sessions", JSON.stringify(sessions));
+
+    if (currentSessionId === id) {
+      startNewChat();
+    } else {
+      renderSidebar();
+    }
+  }
+}
