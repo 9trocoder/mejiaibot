@@ -158,3 +158,68 @@ function deleteSession(id) {
     }
   }
 }
+
+// 2. Append Message to DOM
+function appendMessageToDOM(role, text) {
+  const msgRow = document.createElement("div");
+  msgRow.className = `message-row ${role}`;
+
+  const innerDiv = document.createElement("div");
+  innerDiv.className = "message-inner";
+
+  const contentDiv = document.createElement("div");
+  contentDiv.className = "content";
+
+  // Render Markdown for AI, Plain text for User
+  if (role === "ai") {
+    contentDiv.innerHTML = marked.parse(text);
+
+    // 1. Add Copy Button to Code Blocks
+    contentDiv.querySelectorAll("pre").forEach((pre) => {
+      const code = pre.querySelector("code");
+      if (!code) return;
+
+      const btn = document.createElement("button");
+      btn.className = "copy-code-btn";
+      btn.innerHTML = `${SVG_COPY} Copy code`;
+      btn.addEventListener("click", () => {
+        navigator.clipboard.writeText(code.textContent).then(() => {
+          btn.innerHTML = `${SVG_CHECK} Copied!`;
+          setTimeout(() => (btn.innerHTML = `${SVG_COPY} Copy code`), 2000);
+        });
+      });
+      pre.appendChild(btn);
+    });
+
+    // 2. Add Copy Button to Message Content
+    const actionsDiv = document.createElement("div");
+    actionsDiv.className = "message-actions";
+    const copyMsgBtn = document.createElement("button");
+    copyMsgBtn.className = "msg-copy-btn";
+    copyMsgBtn.innerHTML = SVG_COPY;
+    copyMsgBtn.title = "Copy response";
+    copyMsgBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(text).then(() => {
+        copyMsgBtn.innerHTML = SVG_CHECK;
+        setTimeout(() => (copyMsgBtn.innerHTML = SVG_COPY), 2000);
+      });
+    });
+    actionsDiv.appendChild(copyMsgBtn);
+    contentDiv.appendChild(actionsDiv);
+  } else {
+    contentDiv.textContent = text;
+  }
+
+  innerDiv.appendChild(contentDiv);
+  msgRow.appendChild(innerDiv);
+  chatContainer.appendChild(msgRow);
+
+  // Trigger syntax highlighting for new code blocks
+  if (role === "ai") {
+    contentDiv.querySelectorAll("pre code").forEach((block) => {
+      hljs.highlightElement(block);
+    });
+  }
+
+  scrollToBottom();
+}
