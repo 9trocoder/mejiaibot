@@ -41,3 +41,45 @@ const SVG_CHECK = `<svg stroke="currentColor" fill="none" stroke-width="2" viewB
 const SVG_SUN = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
 const SVG_MOON = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
 const SVG_TRASH = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Configure Marked.js options
+  marked.setOptions({
+    highlight: function (code, lang) {
+      const language = hljs.getLanguage(lang) ? lang : "plaintext";
+      return hljs.highlight(code, { language }).value;
+    },
+    breaks: true, // Enable line breaks
+  });
+
+  // Apply saved theme
+  const savedTheme = localStorage.getItem("theme") || "light";
+  applyTheme(savedTheme);
+
+  // Render existing history
+  renderHistory();
+
+  // Render Sidebar
+  renderSidebar();
+});
+
+// 1. Render Chat History
+function renderHistory() {
+  // Clear current view (except the initial greeting if history is empty)
+  chatContainer.innerHTML = "";
+
+  if (chatHistory.length === 0) {
+    chatContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-logo">${SVG_AI}</div>
+                <h2>How can I help you today?</h2>
+                <p>I can help you write code, debug issues, or explain complex topics.</p>
+            </div>`;
+    return;
+  }
+
+  chatHistory.forEach((msg) => {
+    appendMessageToDOM(msg.role, msg.content);
+  });
+  scrollToBottom();
+}
