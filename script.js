@@ -223,3 +223,79 @@ function appendMessageToDOM(role, text) {
 
   scrollToBottom();
 }
+
+function scrollToBottom() {
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+// 3. Handle API Interaction
+async function handleChat() {
+  const text = userInput.value.trim();
+  if (!text) return;
+
+  // 1. Add User Message
+  addMessage("user", text);
+  userInput.value = "";
+  userInput.style.height = "50px"; // Reset height
+
+  // 2. Show Loading State
+  const loadingId = "loading-" + Date.now();
+  const loadingDiv = document.createElement("div");
+  loadingDiv.className = "message-row ai";
+  loadingDiv.id = loadingId;
+  loadingDiv.innerHTML = `
+        <div class="message-inner">
+            <div class="content">Thinking...<span class="cursor"></span></div>
+        </div>
+    `;
+  chatContainer.appendChild(loadingDiv);
+  scrollToBottom();
+
+  try {
+    // Prepare API Payload
+    // We map our history to the format OpenAI/OpenRouter expects
+    const messages = chatHistory.map((msg) => ({
+      role: msg.role === "user" ? "user" : "assistant",
+      content: msg.content,
+    }));
+
+    const selectedModel = modelSelect.value;
+    console.log("Attempting to fetch with model:", selectedModel);
+
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${API_KEY}`,
+        "Content-Type": "application/json",
+        // OpenRouter specific headers
+        "HTTP-Referer": "http://localhost:3000", // Safer for local testing
+        "X-Title": "My AI Chatbot",
+      },
+      body: JSON.stringify({
+        model: modelSelect.value,
+        messages: messages,
+      }),
+    });
+
+    const data = await response.json();
+
+    // Remove loading spinner
+    const loadingElement = document.getElementById(loadingId);
+    if (loadingElement) loadingElement.remove();
+
+    if (!response.ok || data.error) {
+      console.error("API Error Details:", data);
+      throw new Error(data.error?.message || `API Error: ${response.status}`);
+    }
+
+    if (data.choices && data.choices[0]) {
+      const aiResponse = data.choices[0].message.content;
+      addMessage("ai", aiResponse);
+    }
+  } catch (error) {
+    console.error("Network Error Details:", error);
+    const loadingElement = document.getElementById(loadingId);
+    if (loadingElement) loadingElement.remove();
+    addMessage("ai", `Error: ${error.message}`);
+  }
+}
