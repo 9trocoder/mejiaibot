@@ -397,3 +397,14 @@ code {
   align-items: center;
   gap: 8px;
 }
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 0;
+  margin-right: 12px;
+}
