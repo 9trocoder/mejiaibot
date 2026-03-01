@@ -124,3 +124,13 @@ function renderSidebar() {
     historyList.appendChild(item);
   });
 }
+
+// 3. Load Specific Session
+function loadSession(id) {
+  currentSessionId = id;
+  localStorage.setItem("currentSessionId", id);
+  const session = sessions.find((s) => s.id === id);
+  chatHistory = session ? session.messages : [];
+  renderHistory();
+  renderSidebar();
+}
