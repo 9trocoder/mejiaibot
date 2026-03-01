@@ -405,3 +405,41 @@ if (sidebarOverlay) {
     sidebarOverlay.classList.remove("active");
   });
 }
+
+const SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+  const recognition = new SpeechRecognition();
+  recognition.continuous = false;
+  recognition.lang = "en-US";
+
+  voiceBtn.addEventListener("click", () => {
+    if (voiceBtn.classList.contains("listening")) {
+      recognition.stop();
+    } else {
+      recognition.start();
+      voiceBtn.classList.add("listening");
+      userInput.placeholder = "Listening...";
+    }
+  });
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    userInput.value = transcript;
+    // Optional: Auto-send
+    // handleChat();
+  };
+
+  recognition.onerror = (event) => {
+    console.error("Speech recognition error", event.error);
+  };
+
+  recognition.onend = () => {
+    voiceBtn.classList.remove("listening");
+    userInput.placeholder = "Send a message...";
+  };
+} else {
+  console.log("Web Speech API not supported in this browser.");
+  voiceBtn.style.display = "none";
+}
