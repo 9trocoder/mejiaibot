@@ -1,7 +1,7 @@
 // adding api key and url
 // declaration of variables
 const API_KEY =
-  "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";
+  "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";
 const API_URL = "https://openrouter.ai/api/v1/chat/completions";
 
 const chatContainer = document.getElementById("chat-container");
@@ -21,7 +21,6 @@ const sidebarOverlay = document.getElementById("sidebar-overlay");
 let sessions = JSON.parse(localStorage.getItem("sessions")) || [];
 let currentSessionId = localStorage.getItem("currentSessionId");
 let chatHistory = [];
-
 
 // load current session if exists
 if (currentSessionId) {
