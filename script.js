@@ -330,3 +330,19 @@ function addMessage(role, content) {
   appendMessageToDOM(role, content);
   renderSidebar();
 }
+
+// 5. Theme Handling
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  localStorage.setItem("theme", theme);
+
+  // Update Highlight.js Theme
+  const themeUrl =
+    theme === "light"
+      ? "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css"
+      : "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css";
+  if (highlightLink) highlightLink.href = themeUrl;
+
+  // Update Button Icon
+  if (themeBtn) themeBtn.innerHTML = theme === "light" ? SVG_MOON : SVG_SUN;
+}
