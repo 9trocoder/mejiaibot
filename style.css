@@ -180,3 +180,13 @@ body {
   background-color: transparent;
   justify-content: flex-end;
 }
+
+/* Message Inner (Centered Content) */
+.message-inner {
+  max-width: 800px;
+  margin: 0;
+  display: flex;
+  gap: 0;
+  padding: 0;
+  align-items: flex-start;
+}
