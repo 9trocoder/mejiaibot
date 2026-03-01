@@ -324,3 +324,48 @@ code {
   box-shadow: none;
   border-color: transparent;
 }
+/* Input Buttons */
+.input-btn {
+  position: absolute;
+  bottom: 8px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-btn:hover {
+  background-color: var(--btn-hover);
+  color: var(--text-primary);
+}
+
+.send-btn {
+  right: 10px;
+}
+
+.voice-btn {
+  right: 50px;
+}
+
+.voice-btn.listening {
+  color: #ef4444;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
