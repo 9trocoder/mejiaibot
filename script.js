@@ -276,6 +276,11 @@ async function handleChat() {
     if (loadingElement) loadingElement.remove();
 
     if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error(
+          "API Endpoint not found. Ensure 'api/chat.js' exists and is deployed.",
+        );
+      }
       // Handle non-200 responses (like 404 or 500)
       let errorMessage = `API Error: ${response.status}`;
       try {
