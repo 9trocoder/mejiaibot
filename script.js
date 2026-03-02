@@ -271,14 +271,26 @@ async function handleChat() {
       }),
     });
 
-    const data = await response.json();
-
     // Remove loading spinner
     const loadingElement = document.getElementById(loadingId);
     if (loadingElement) loadingElement.remove();
 
-    if (!response.ok || data.error) {
-      console.error("API Error Details:", data);
+    if (!response.ok) {
+      // Handle non-200 responses (like 404 or 500)
+      let errorMessage = `API Error: ${response.status}`;
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.error?.message || errorMessage;
+      } catch (e) {
+        // If response isn't JSON (e.g. 404 HTML page), use status text
+        console.error("Could not parse error JSON:", e);
+      }
+      throw new Error(errorMessage);
+    }
+
+    const data = await response.json();
+
+    if (data.error) {
       throw new Error(data.error?.message || `API Error: ${response.status}`);
     }
 
