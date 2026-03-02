@@ -1,5 +1,7 @@
-// adding  url
-// declaration of variables
+// ==============================
+// Mejiaibot - Clean Production JS
+// ==============================
+
 const API_URL = "/api/chat";
 
 const chatContainer = document.getElementById("chat-container");
@@ -20,68 +22,57 @@ let sessions = JSON.parse(localStorage.getItem("sessions")) || [];
 let currentSessionId = localStorage.getItem("currentSessionId");
 let chatHistory = [];
 
-// load current session if exists
+// Load current session if exists
 if (currentSessionId) {
   const session = sessions.find((s) => s.id === currentSessionId);
-  if (session) {
-    chatHistory = session.messages;
-  } else {
-    currentSessionId = null;
-  }
+  if (session) chatHistory = session.messages;
+  else currentSessionId = null;
 }
 
-// svg icons for the app
-const SVG_USER = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
-const SVG_AI = `<svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>`;
-const SVG_COPY = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>`;
-const SVG_CHECK = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-const SVG_SUN = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
-const SVG_MOON = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
-const SVG_TRASH = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
+// --------------------------
+// SVG Icons
+// --------------------------
+const SVG_USER = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>`;
+const SVG_AI = `<svg stroke="currentColor" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>`;
+const SVG_COPY = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>`;
+const SVG_CHECK = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+const SVG_SUN = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+const SVG_MOON = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+const SVG_TRASH = `<svg stroke="currentColor" fill="none" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>`;
 
+// --------------------------
+// DOMContentLoaded
+// --------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  // Configure Marked.js options
-  marked.setOptions({
-    highlight: function (code, lang) {
-      const language = hljs.getLanguage(lang) ? lang : "plaintext";
-      return hljs.highlight(code, { language }).value;
-    },
-    breaks: true, // Enable line breaks
-  });
-
   // Apply saved theme
   const savedTheme = localStorage.getItem("theme") || "light";
   applyTheme(savedTheme);
 
-  // Render existing history
+  // Render chat history & sidebar
   renderHistory();
-
-  // Render Sidebar
   renderSidebar();
 });
 
-// 1. Render Chat History
+// --------------------------
+// Render Functions
+// --------------------------
 function renderHistory() {
-  // Clear current view (except the initial greeting if history is empty)
   chatContainer.innerHTML = "";
 
   if (chatHistory.length === 0) {
     chatContainer.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-logo">${SVG_AI}</div>
-                <h2>How can I help you today?</h2>
-                <p>I can help you write code, debug issues, or explain complex topics.</p>
-            </div>`;
+      <div class="empty-state">
+        <div class="empty-logo">${SVG_AI}</div>
+        <h2>How can I help you today?</h2>
+        <p>I can help you write code, debug issues, or explain complex topics.</p>
+      </div>`;
     return;
   }
 
-  chatHistory.forEach((msg) => {
-    appendMessageToDOM(msg.role, msg.content);
-  });
+  chatHistory.forEach((msg) => appendMessageToDOM(msg.role, msg.content));
   scrollToBottom();
 }
 
-// 2. Render Sidebar
 function renderSidebar() {
   historyList.innerHTML = "";
 
@@ -89,7 +80,6 @@ function renderSidebar() {
     const empty = document.createElement("div");
     empty.className = "history-item";
     empty.textContent = "No previous chats";
-    empty.style.cursor = "default";
     empty.style.opacity = "0.5";
     historyList.appendChild(empty);
     return;
@@ -98,6 +88,7 @@ function renderSidebar() {
   sessions.forEach((session) => {
     const item = document.createElement("div");
     item.className = "history-item";
+    if (session.id === currentSessionId) item.classList.add("active");
 
     const titleSpan = document.createElement("span");
     titleSpan.className = "history-title";
@@ -114,15 +105,14 @@ function renderSidebar() {
     });
     item.appendChild(deleteBtn);
 
-    if (session.id === currentSessionId) {
-      item.classList.add("active");
-    }
     item.addEventListener("click", () => loadSession(session.id));
     historyList.appendChild(item);
   });
 }
 
-// 3. Load Specific Session
+// --------------------------
+// Session Management
+// --------------------------
 function loadSession(id) {
   currentSessionId = id;
   localStorage.setItem("currentSessionId", id);
@@ -132,7 +122,6 @@ function loadSession(id) {
   renderSidebar();
 }
 
-// 4. Start New Chat
 function startNewChat() {
   currentSessionId = null;
   localStorage.removeItem("currentSessionId");
@@ -142,21 +131,17 @@ function startNewChat() {
   userInput.focus();
 }
 
-// 5. Delete Session
 function deleteSession(id) {
-  if (confirm("Delete this chat?")) {
-    sessions = sessions.filter((s) => s.id !== id);
-    localStorage.setItem("sessions", JSON.stringify(sessions));
-
-    if (currentSessionId === id) {
-      startNewChat();
-    } else {
-      renderSidebar();
-    }
-  }
+  if (!confirm("Delete this chat?")) return;
+  sessions = sessions.filter((s) => s.id !== id);
+  localStorage.setItem("sessions", JSON.stringify(sessions));
+  if (currentSessionId === id) startNewChat();
+  else renderSidebar();
 }
 
-// 2. Append Message to DOM
+// --------------------------
+// Append Message
+// --------------------------
 function appendMessageToDOM(role, text) {
   const msgRow = document.createElement("div");
   msgRow.className = `message-row ${role}`;
@@ -167,11 +152,10 @@ function appendMessageToDOM(role, text) {
   const contentDiv = document.createElement("div");
   contentDiv.className = "content";
 
-  // Render Markdown for AI, Plain text for User
   if (role === "ai") {
     contentDiv.innerHTML = marked.parse(text);
 
-    // 1. Add Copy Button to Code Blocks
+    // Copy code buttons
     contentDiv.querySelectorAll("pre").forEach((pre) => {
       const code = pre.querySelector("code");
       if (!code) return;
@@ -188,7 +172,6 @@ function appendMessageToDOM(role, text) {
       pre.appendChild(btn);
     });
 
-    // 2. Add Copy Button to Message Content
     const actionsDiv = document.createElement("div");
     actionsDiv.className = "message-actions";
     const copyMsgBtn = document.createElement("button");
@@ -211,12 +194,8 @@ function appendMessageToDOM(role, text) {
   msgRow.appendChild(innerDiv);
   chatContainer.appendChild(msgRow);
 
-  // Trigger syntax highlighting for new code blocks
-  if (role === "ai") {
-    contentDiv.querySelectorAll("pre code").forEach((block) => {
-      hljs.highlightElement(block);
-    });
-  }
+  // Highlight new code blocks
+  if (role === "ai") contentDiv.querySelectorAll("pre code").forEach((block) => hljs.highlightElement(block));
 
   scrollToBottom();
 }
@@ -225,120 +204,62 @@ function scrollToBottom() {
   chatContainer.scrollTop = chatContainer.scrollHeight;
 }
 
-// 3. Handle API Interaction
+// --------------------------
+// Handle Chat
+// --------------------------
 async function handleChat() {
   const text = userInput.value.trim();
-
   if (!text) return;
 
-  // 1. Add User Message
   addMessage("user", text);
   userInput.value = "";
-  userInput.style.height = "50px"; // Reset height
+  userInput.style.height = "50px";
 
-  // 2. Show Loading State
   const loadingId = "loading-" + Date.now();
   const loadingDiv = document.createElement("div");
   loadingDiv.className = "message-row ai";
   loadingDiv.id = loadingId;
-  loadingDiv.innerHTML = `
-        <div class="message-inner">
-            <div class="content">Thinking...<span class="cursor"></span></div>
-        </div>
-    `;
+  loadingDiv.innerHTML = `<div class="message-inner"><div class="content">Thinking...<span class="cursor"></span></div></div>`;
   chatContainer.appendChild(loadingDiv);
   scrollToBottom();
 
   try {
-    // Prepare API Payload
-    // We map our history to the format OpenAI/OpenRouter expects
     const messages = chatHistory
-      .filter(
-        (msg) =>
-          !msg.content.startsWith("Error:") && !msg.content.startsWith("⚠️"),
-      )
-      .map((msg) => ({
-        role: msg.role === "user" ? "user" : "assistant",
-        content: msg.content,
-      }));
-
-    const selectedModel = modelSelect.value;
-    console.log("Attempting to fetch with model:", selectedModel);
+      .filter((msg) => !msg.content.startsWith("Error:") && !msg.content.startsWith("⚠️"))
+      .map((msg) => ({ role: msg.role === "user" ? "user" : "assistant", content: msg.content }));
 
     const response = await fetch(API_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        model: modelSelect.value,
-        messages: messages,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ model: modelSelect.value, messages }),
     });
 
-    // Remove loading spinner
-    const loadingElement = document.getElementById(loadingId);
-    if (loadingElement) loadingElement.remove();
+    document.getElementById(loadingId)?.remove();
 
-    if (!response.ok) {
-      if (response.status === 404) {
-        throw new Error(
-          "API Endpoint not found. Ensure 'api/chat.js' exists and is deployed.",
-        );
-      }
-      // Handle non-200 responses (like 404 or 500)
-      let errorMessage = `API Error: ${response.status}`;
-      try {
-        const errorData = await response.json();
-        errorMessage = errorData.error?.message || errorMessage;
-      } catch (e) {
-        // If response isn't JSON (e.g. 404 HTML page), use status text
-        console.error("Could not parse error JSON:", e);
-      }
-      throw new Error(errorMessage);
-    }
+    if (!response.ok) throw new Error(`API Error: ${response.status}`);
 
     const data = await response.json();
-
-    if (data.error) {
-      throw new Error(data.error?.message || `API Error: ${response.status}`);
-    }
-
-    if (data.choices && data.choices[0]) {
-      const aiResponse = data.choices[0].message.content;
-      addMessage("ai", aiResponse);
-    }
+    if (data.error) throw new Error(data.error?.message || "Unknown API error");
+    if (data.choices && data.choices[0]) addMessage("ai", data.choices[0].message.content);
   } catch (error) {
-    console.error("Network Error Details:", error);
-    const loadingElement = document.getElementById(loadingId);
-    if (loadingElement) loadingElement.remove();
-    // Display error without saving to history
+    document.getElementById(loadingId)?.remove();
     appendMessageToDOM("ai", `⚠️ **Error:** ${error.message}`);
   }
 }
 
-// 4. Add Message to State & Storage
+// --------------------------
+// Add Message to State
+// --------------------------
 function addMessage(role, content) {
   const newMessage = { role, content };
   chatHistory.push(newMessage);
 
   if (!currentSessionId) {
-    // Create new session
     currentSessionId = Date.now().toString();
     localStorage.setItem("currentSessionId", currentSessionId);
-
-    // Generate title from first user message
-    let title =
-      content.length > 30 ? content.substring(0, 30) + "..." : content;
-
-    const newSession = {
-      id: currentSessionId,
-      title: title,
-      messages: chatHistory,
-    };
+    const newSession = { id: currentSessionId, title: content.slice(0, 30) + (content.length > 30 ? "..." : ""), messages: chatHistory };
     sessions.unshift(newSession);
   } else {
-    // Update existing session
     const session = sessions.find((s) => s.id === currentSessionId);
     if (session) session.messages = chatHistory;
   }
@@ -348,83 +269,65 @@ function addMessage(role, content) {
   renderSidebar();
 }
 
-// 5. Theme Handling
+// --------------------------
+// Theme
+// --------------------------
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
   localStorage.setItem("theme", theme);
 
-  // Update Highlight.js Theme
-  const themeUrl =
-    theme === "light"
-      ? "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css"
-      : "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css";
+  const themeUrl = theme === "light"
+    ? "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.min.css"
+    : "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css";
   if (highlightLink) highlightLink.href = themeUrl;
 
-  // Update Button Icon
   if (themeBtn) themeBtn.innerHTML = theme === "light" ? SVG_MOON : SVG_SUN;
 }
 
-// Send Button
+// --------------------------
+// Event Listeners
+// --------------------------
 sendBtn.addEventListener("click", handleChat);
 
-// Enter Key (Shift+Enter for new line)
 userInput.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault();
-    handleChat();
-  }
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); handleChat(); }
 });
 
-// Auto-resize Textarea
 userInput.addEventListener("input", function () {
   this.style.height = "auto";
   this.style.height = this.scrollHeight + "px";
   if (this.value === "") this.style.height = "50px";
 });
 
-// Clear History
 clearBtn.addEventListener("click", () => {
-  if (confirm("Are you sure you want to clear the chat history?")) {
-    chatHistory = [];
-    if (currentSessionId) {
-      const session = sessions.find((s) => s.id === currentSessionId);
-      if (session) session.messages = [];
-      localStorage.setItem("sessions", JSON.stringify(sessions));
-    }
-    renderHistory();
+  if (!confirm("Are you sure you want to clear the chat history?")) return;
+  chatHistory = [];
+  if (currentSessionId) {
+    const session = sessions.find((s) => s.id === currentSessionId);
+    if (session) session.messages = [];
+    localStorage.setItem("sessions", JSON.stringify(sessions));
   }
+  renderHistory();
 });
 
-// Theme Toggle
-themeBtn.addEventListener("click", () => {
-  const currentTheme = document.documentElement.getAttribute("data-theme");
-  const newTheme = currentTheme === "light" ? "dark" : "light";
-  applyTheme(newTheme);
+themeBtn.addEventListener("click", () => applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light"));
+
+if (newChatBtn) newChatBtn.addEventListener("click", startNewChat);
+
+if (mobileMenuBtn) mobileMenuBtn.addEventListener("click", () => {
+  sidebar.classList.toggle("open");
+  sidebarOverlay.classList.toggle("active");
 });
 
-// New Chat
-if (newChatBtn) {
-  newChatBtn.addEventListener("click", startNewChat);
-}
+if (sidebarOverlay) sidebarOverlay.addEventListener("click", () => {
+  sidebar.classList.remove("open");
+  sidebarOverlay.classList.remove("active");
+});
 
-// Mobile Menu Toggle
-if (mobileMenuBtn) {
-  mobileMenuBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("open");
-    sidebarOverlay.classList.toggle("active");
-  });
-}
-
-// Close Sidebar on Overlay Click
-if (sidebarOverlay) {
-  sidebarOverlay.addEventListener("click", () => {
-    sidebar.classList.remove("open");
-    sidebarOverlay.classList.remove("active");
-  });
-}
-
-const SpeechRecognition =
-  window.SpeechRecognition || window.webkitSpeechRecognition;
+// --------------------------
+// Voice Recognition
+// --------------------------
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
 if (SpeechRecognition) {
   const recognition = new SpeechRecognition();
@@ -432,9 +335,8 @@ if (SpeechRecognition) {
   recognition.lang = "en-US";
 
   voiceBtn.addEventListener("click", () => {
-    if (voiceBtn.classList.contains("listening")) {
-      recognition.stop();
-    } else {
+    if (voiceBtn.classList.contains("listening")) recognition.stop();
+    else {
       recognition.start();
       voiceBtn.classList.add("listening");
       userInput.placeholder = "Listening...";
@@ -444,19 +346,14 @@ if (SpeechRecognition) {
   recognition.onresult = (event) => {
     const transcript = event.results[0][0].transcript;
     userInput.value = transcript;
-    // Optional: Auto-send
-    // handleChat();
   };
 
-  recognition.onerror = (event) => {
-    console.error("Speech recognition error", event.error);
-  };
+  recognition.onerror = (event) => console.error("Speech recognition error", event.error);
 
   recognition.onend = () => {
     voiceBtn.classList.remove("listening");
     userInput.placeholder = "Send a message...";
   };
 } else {
-  console.log("Web Speech API not supported in this browser.");
   voiceBtn.style.display = "none";
 }
