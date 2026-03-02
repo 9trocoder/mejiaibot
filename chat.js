@@ -4,24 +4,22 @@ export default async function handler(req, res) {
   }
 
   // Get the key from Vercel Environment Variables
-  const apiKey = process.env.OPENROUTER_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
 
   if (!apiKey) {
     return res
       .status(500)
-      .json({ error: "Server Configuration Error: Missing API Key" });
+      .json({ error: "Server Configuration Error: Missing GROQ_API_KEY" });
   }
 
   try {
     const response = await fetch(
-      "https://openrouter.ai/api/v1/chat/completions",
+      "https://api.groq.com/openai/v1/chat/completions",
       {
         method: "POST",
         headers: {
           Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": req.headers.referer || "https://mejiaibot.vercel.app",
-          "X-Title": "MejiAI Bot",
         },
         body: JSON.stringify(req.body),
       },
