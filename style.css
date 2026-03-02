@@ -448,7 +448,8 @@ code {
 }
 
 #clear-btn,
-#theme-btn {
+#theme-btn,
+#export-btn {
   background: transparent;
   border: none;
   color: var(--text-secondary);
@@ -462,7 +463,8 @@ code {
 }
 
 #clear-btn:hover,
-#theme-btn:hover {
+#theme-btn:hover,
+#export-btn:hover {
   background-color: var(--btn-hover);
   color: var(--text-primary);
 }
