@@ -1,6 +1,6 @@
 // adding  url
 // declaration of variables
-const API_URL = "https://openrouter.ai/api/v1/chat/completions";
+const API_URL = "/api/chat";
 
 const chatContainer = document.getElementById("chat-container");
 const userInput = document.getElementById("user-input");
@@ -229,7 +229,6 @@ function scrollToBottom() {
 async function handleChat() {
   const text = userInput.value.trim();
 
-  console.log(CONFIG.API_KEY);
   if (!text) return;
 
   // 1. Add User Message
@@ -264,11 +263,7 @@ async function handleChat() {
     const response = await fetch(API_URL, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${CONFIG.API_KEY}`,
         "Content-Type": "application/json",
-        // OpenRouter specific headers
-        "HTTP-Referer": "http://localhost:3000", // Safer for local testing
-        "X-Title": "My AI Chatbot",
       },
       body: JSON.stringify({
         model: modelSelect.value,
