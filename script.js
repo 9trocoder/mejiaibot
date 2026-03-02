@@ -252,10 +252,15 @@ async function handleChat() {
   try {
     // Prepare API Payload
     // We map our history to the format OpenAI/OpenRouter expects
-    const messages = chatHistory.map((msg) => ({
-      role: msg.role === "user" ? "user" : "assistant",
-      content: msg.content,
-    }));
+    const messages = chatHistory
+      .filter(
+        (msg) =>
+          !msg.content.startsWith("Error:") && !msg.content.startsWith("⚠️"),
+      )
+      .map((msg) => ({
+        role: msg.role === "user" ? "user" : "assistant",
+        content: msg.content,
+      }));
 
     const selectedModel = modelSelect.value;
     console.log("Attempting to fetch with model:", selectedModel);
@@ -307,7 +312,8 @@ async function handleChat() {
     console.error("Network Error Details:", error);
     const loadingElement = document.getElementById(loadingId);
     if (loadingElement) loadingElement.remove();
-    addMessage("ai", `Error: ${error.message}`);
+    // Display error without saving to history
+    appendMessageToDOM("ai", `⚠️ **Error:** ${error.message}`);
   }
 }
 
