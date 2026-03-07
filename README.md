@@ -4,77 +4,50 @@ Mejiaibot is a structured conversational AI system built on top of modern Large 
 
 Rather than functioning as a simple prompt–response chatbot, Mejiaibot introduces a layered architecture designed to improve reasoning stability, contextual awareness, and response reliability.
 
-The goal is to transform a large language model from a reactive text generator into a controlled conversational reasoning engine capable of handling complex prompts while maintaining logical consistency.
+The objective is to transform a large language model from a reactive text generator into a controlled conversational reasoning engine capable of handling complex prompts while maintaining logical consistency and conversational context.
 
 ---
 
-# System Overview
+# System Architecture
 
-Mejiaibot implements a modular AI interaction pipeline designed to enforce structure in LLM-based dialogue systems.
+Mejiaibot processes every user interaction through a structured pipeline designed to improve reliability and safety.
 
-```mermaid
-flowchart TD
-A[User Input] --> B[Prompt Firewall]
-B --> C[Constraint Validator]
-C --> D[Conversation Context Manager]
-D --> E[Vector Memory Retrieval]
-E --> F[Prompt Guardrails]
-F --> G[LLM Processing Layer - OpenRouter]
-G --> H[Self Critique Module]
-H --> I[Response Quality Scoring]
-I --> J[Final Response]
-J --> K[UI Rendering]
-```
+**Processing Pipeline**
 
-This pipeline ensures prompts pass through safety, validation, and reasoning layers before reaching the AI model.
+1. User Input  
+2. Prompt Security Firewall  
+3. Constraint Validator  
+4. Conversation Context Manager  
+5. Knowledge Retrieval Layer  
+6. Prompt Guardrails  
+7. LLM Processing Layer (OpenRouter API)  
+8. Response Self-Critique  
+9. Response Quality Scoring  
+10. Final Output Rendering  
+
+This layered structure ensures prompts are validated, contextualized, and verified before responses are returned to the user.
 
 ---
 
 # Core Capabilities
 
 ### Context-Aware Conversation Memory
-Maintains conversational history across multiple user interactions.
+Maintains conversational history across multiple user interactions to improve continuity and response relevance.
 
 ### Structured Reasoning Guardrails
-System prompts enforce structured and logical responses.
+System-level prompts guide the language model toward more logically structured answers.
 
 ### Constraint Validation
-Detects prompt instructions and ensures they are respected.
+Detects prompt instructions and ensures they are respected during response generation.
 
 ### Prompt Injection Protection
-Prevents malicious prompts from overriding system instructions.
+Prevents malicious prompts from overriding internal system instructions.
 
 ### Response Verification
-Self-checking mechanisms validate responses before display.
+Self-checking mechanisms review responses before they are displayed to the user.
 
 ### Modular Architecture
-Designed for extensibility and AI feature experimentation.
-
----
-
-# AI Processing Pipeline
-
-```mermaid
-sequenceDiagram
-participant User
-participant UI
-participant Firewall
-participant Validator
-participant Memory
-participant LLM
-participant Critic
-participant Output
-
-User->>UI: Send prompt
-UI->>Firewall: Forward request
-Firewall->>Validator: Safety validation
-Validator->>Memory: Retrieve context
-Memory->>LLM: Build enhanced prompt
-LLM->>Critic: Generate response
-Critic->>Output: Verify response
-Output->>UI: Return message
-UI->>User: Render response
-```
+The system is structured to allow rapid experimentation and feature expansion.
 
 ---
 
@@ -82,38 +55,38 @@ UI->>User: Render response
 
 ## Conversational Intelligence
 
-• Context-aware multi-turn conversations  
-• Structured reasoning prompts  
-• Self-verification pipeline  
-• Lightweight knowledge retrieval  
+- Context-aware multi-turn conversations
+- Structured reasoning prompts
+- Self-verification pipeline
+- Lightweight knowledge retrieval layer
 
 ---
 
 ## User Experience
 
-• Premium dark-mode interface  
-• Smooth animated UI interactions  
-• Markdown message rendering  
-• Syntax-highlighted code blocks  
-• One-click code copy buttons  
+- Premium dark-mode interface
+- Smooth UI animations
+- Markdown message rendering
+- Syntax highlighted code blocks
+- One-click code copy functionality
 
 ---
 
 ## Interaction Capabilities
 
-• Voice recognition input  
-• Persistent chat sessions  
-• Chat history stored using localStorage  
-• JSON export for conversation logs  
+- Voice recognition input
+- Persistent conversation sessions
+- Chat history stored using localStorage
+- JSON export for conversation logs
 
 ---
 
 ## Reliability Systems
 
-• Error Handling 2.0  
-• Constraint-aware prompt processing  
-• Response scoring system  
-• Retry logic for failed responses  
+- Error Handling 2.0
+- Constraint-aware prompt processing
+- Response scoring system
+- Retry logic for failed responses
 
 ---
 
@@ -121,38 +94,26 @@ UI->>User: Render response
 
 Large language models can be vulnerable to prompt injection and instruction override attacks.
 
-Mejiaibot includes protective mechanisms to mitigate these risks.
+Mejiaibot includes protective mechanisms designed to mitigate these threats.
 
-```mermaid
-flowchart LR
-A[User Prompt] --> B[Security Check]
-B -->|Safe| C[AI Processing]
-B -->|Attack Detected| D[Blocked]
-```
+Current safeguards include:
 
-### Security Protections
+- Prompt injection detection
+- System prompt isolation
+- Instruction override prevention
+- Controlled prompt construction
 
-• Prompt injection detection  
-• System prompt isolation  
-• Instruction override prevention  
+These mechanisms reduce the risk of malicious prompts manipulating the behavior of the system.
 
 ---
 
-# Vector Memory Layer
+# Knowledge Retrieval Layer
 
-Mejiaibot includes a lightweight knowledge retrieval system inspired by Retrieval Augmented Generation.
+Mejiaibot includes an experimental knowledge retrieval system inspired by Retrieval-Augmented Generation.
 
-Instead of relying entirely on model training data, relevant knowledge entries can be injected into the prompt context.
+Instead of relying solely on the model’s training data, the system can retrieve structured knowledge entries and inject them into the prompt context before sending requests to the LLM.
 
-```mermaid
-flowchart TD
-A[User Prompt] --> B[Knowledge Retrieval]
-B --> C[Context Injection]
-C --> D[LLM Processing]
-D --> E[AI Response]
-```
-
-This allows the system to incorporate structured knowledge when generating responses.
+This improves the model’s ability to generate responses based on relevant contextual information.
 
 ---
 
@@ -160,20 +121,20 @@ This allows the system to incorporate structured knowledge when generating respo
 
 ### Frontend
 
-HTML5  
-CSS3  
-JavaScript ES6
+- HTML5  
+- CSS3  
+- JavaScript (ES6)
 
 ### AI Infrastructure
 
-OpenRouter API
+- OpenRouter API (LLM gateway)
 
 ### Interface Utilities
 
-Markdown renderer  
-Syntax highlighting engine  
-Clipboard utilities  
-JSON export helpers  
+- Markdown renderer
+- Syntax highlighting engine
+- Clipboard interaction helpers
+- JSON export utilities
 
 ---
 
@@ -213,22 +174,20 @@ mejiaibot/
     └── logicBenchmarks.json
 ```
 
-This modular structure allows the system to expand without major architectural changes.
+This modular structure allows the system to evolve without major architectural rewrites.
 
 ---
 
 # Deployment
 
-The system is deployed using Vercel.
+The application is deployed using **Vercel**.
 
-```mermaid
-flowchart LR
-A[GitHub Repository] --> B[Vercel Build]
-B --> C[Deployment]
-C --> D[Live Chat Application]
-```
+Deployment workflow:
 
-Every push to the main branch automatically redeploys the application.
+1. Code pushed to GitHub
+2. Vercel build pipeline runs
+3. Application is deployed
+4. Live chatbot updates automatically
 
 ---
 
@@ -240,61 +199,67 @@ https://mejiaibot.vercel.app
 
 # Development Philosophy
 
-Large Language Models are powerful but inherently unpredictable without structured control layers.
+Large Language Models are powerful but inherently unreliable without structural control mechanisms.
 
-Common issues include:
+Common failure modes include:
 
-• hallucinations  
-• instruction drift  
-• reasoning breakdown under complex prompts  
+- hallucinations
+- instruction drift
+- reasoning breakdown under complex prompts
 
-Mejiaibot explores how layered architecture can enforce discipline in LLM responses and improve conversational reliability.
+Mejiaibot explores how architectural layers can enforce discipline on LLM interactions and improve conversational reliability.
 
 ---
 
 # Future Roadmap
 
-### Memory Systems
-• Vector database integration  
-• Long-term knowledge storage  
+The long-term goal is to evolve Mejiaibot into a more advanced conversational AI framework.
+
+Planned capabilities include:
+
+### Advanced Memory Systems
+- Vector database integration
+- Long-term knowledge storage
 
 ### AI Agents
-• Autonomous tool usage  
-• Multi-agent reasoning workflows  
+- Autonomous tool usage
+- Multi-agent reasoning workflows
 
 ### Knowledge Systems
-• Retrieval Augmented Generation pipelines  
-• External knowledge connectors  
+- Retrieval-Augmented Generation pipelines
+- External knowledge connectors
 
-### Security
-• Decentralized identity authentication  
-• Secure AI interaction layers  
+### Security and Identity
+- Web3 decentralized identity integration
+- Secure AI interaction layers
 
-### Evaluation
-• AI reasoning benchmarks  
-• Prompt attack testing  
-• Performance analytics  
+### Evaluation Infrastructure
+- AI reasoning benchmark suite
+- Prompt attack testing framework
+- Performance analytics dashboard
 
 ---
 
 # Experimental Status
 
-This project is experimental and designed as a sandbox for exploring advanced conversational AI architectures.
+This project is experimental and designed as a sandbox environment for exploring conversational AI architecture.
+
+New modules and architectural experiments may be introduced as the system evolves.
 
 ---
 
 # Contributions
 
-Contributions are welcome in areas such as:
+Contributions are welcome in the following areas:
 
-• AI architecture improvements  
-• prompt safety research  
-• UI and UX enhancements  
-• performance optimization  
-• AI benchmarking  
+- AI architecture improvements
+- prompt safety research
+- UI and user experience enhancements
+- performance optimization
+- testing and benchmarking
 
 ---
 
 # Author
 
-Developed as part of ongoing exploration into building structured and resilient conversational AI systems.
+Developed as part of an ongoing exploration into building structured and resilient conversational AI systems.
